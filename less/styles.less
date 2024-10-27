@@ -1,0 +1,322 @@
+.creepster {
+    font-family: "Creepster", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.rubik-wet-paint {
+    font-family: "Rubik Wet Paint", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.oxanium {
+    font-family: "Oxanium", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.cta-border {
+    @media screen and (max-width: 1679px) {
+        // font-size: 0.9vw;
+    }
+
+    @media screen and (max-width: 430px) {
+        // font-size: 2.5vw;
+    }
+
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    position: relative;
+    font-size: 24px;
+    color: #000;
+    font-family: "Rubik Wet Paint",
+    system-ui;
+    text-shadow: 1px 1px 0px #fff;
+    // width: 14%;
+}
+
+.a {
+    @media screen and (max-width: 1679px) {
+        // width: 10.7vw;
+        // height: 2.7vw;
+    }
+
+    @media screen and (max-width: 430px) {
+        // width: 43.5vw;
+        // height: 11vw;
+        // height: 7vw;
+        // padding: 0;
+    }
+
+    width: 260px;
+    height: 45px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+}
+
+.desktop {
+    @media screen and (max-width: 430px) {
+        display: none !important;
+    }
+}
+
+.mobile {
+    @media screen and(max-width: 430px) {
+        display: block;
+    }
+
+    display: none;
+}
+
+.error-message {
+    display: none;
+    // color: red;
+    text-transform: uppercase;
+}
+
+.extra-input {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.remove-input {}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #fff;
+    font-family: "Oxanium", sans-serif;
+}
+
+body {
+    background: #000;
+    color: #fff;
+
+    // background: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjBobmQ1ZDVnaTBzMzBnc21sdWlnYTQ0MGtycDY0YmJpajNkaWtmZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/toYHMPMkP6O5OQZsLW/giphy.gif') no-repeat;
+
+}
+
+main {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+header {
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+}
+
+h1,
+h2,
+h3 {
+    // font-family: "Creepster", system-ui;
+    font-family: "Rubik Wet Paint", system-ui;
+    margin: 0 0 40px;
+
+    span {
+        font-family: "Rubik Wet Paint", system-ui;
+    }
+}
+
+h1 {
+    @media screen and (max-width: 430px) {
+        font-size: 12vw;
+    }
+
+    font-size: 80px;
+    text-transform: uppercase;
+    color: orange;
+}
+
+p,
+iframe,
+form,
+input,
+button,
+.c2 ul li {
+    margin: 0 0 40px;
+}
+
+iframe,
+img {
+    width: 100%;
+    max-width: 100%;
+}
+
+form {
+    border: 1px solid #fff;
+    padding: 20px;
+
+    label,
+    input,
+    button {
+        display: block;
+    }
+
+    label {
+        margin: 0 0 10px;
+    }
+
+    input {
+        height: 45px;
+        width: 100%;
+        border: 1px solid #fff;
+        background: none;
+        color: #fff;
+        padding: 20px;
+        text-transform: capitalize;
+    }
+
+    button {
+        color: #000;
+        border-radius: 0;
+        height: 45px;
+        width: 150px;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &.add-more {
+            border: 1px solid #fff;
+            background: none;
+            color: #fff;
+            width: 250px;
+            text-transform: uppercase;
+
+            &:hover {
+                background: orange;
+                color: #000;
+            }
+        }
+    }
+}
+
+.hp {
+    @media screen and (max-width: 1024px) {
+        flex-wrap: wrap;
+    }
+
+    display: flex;
+    column-gap: 40px;
+    justify-content: space-between;
+    align-content: center;
+
+    section {
+        @media screen and (max-width: 1024px) {
+            flex-basis: 47%;
+        }
+
+        @media screen and (max-width: 430px) {
+            flex-basis: 100% !important;
+        }
+
+        flex-basis: 33%;
+    }
+
+    h2 {
+        font-size: 40px;
+        text-transform: capitalize;
+
+        span {
+            color: orange;
+        }
+    }
+
+    p,
+    li {
+        font-size: 24px;
+
+        span {
+            color: orange;
+            font-family: "Rubik Wet Paint", system-ui;
+            text-transform: capitalize;
+        }
+    }
+
+    .c1 {
+
+        h2 {
+            @media screen and (max-width: 430px){
+                text-align: center;
+            }
+        }
+
+        a {
+            &:hover {
+                color: orange;
+            }
+        }
+
+        .cta-border {
+            background: orange;
+            border: 1px solid #fff;
+
+            &:hover {
+                background: none;
+                color: orange;
+                border-color: orange;
+            }
+        }
+
+    }
+
+    .c2 {
+        @media screen and (max-width: 430px) {
+            margin: 0 0 40px;
+        }
+
+        text-align: center;
+
+        ul {
+            li {
+                text-align: left;
+                list-style: none;
+                list-style-position: inside;
+                text-transform: capitalize;
+                display: flex;
+                // align-items: center;
+                column-gap: 10px;
+
+                &:before {
+                    content: '';
+                    // background-image: url('https://cdn-icons-gif.flaticon.com/12404/12404071.gif');
+
+                    // background-image: url('https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnBhdTF1MWxyMGgxNmtybngxbmZyN2wwYnRuZXlkdTVqZTk2bDN5dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oEdv39DOrzBRRtEEE/giphy.gif');
+
+                    background-image: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGZkbXhvN241Z3hsYXg1OWY5NGhvZHJwZzN1dmhkaTV4eXlweGNuNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ov9jYUdXLxxAcFacU/giphy.gif');
+
+                    background-repeat: no-repeat;
+                    width: 40px;
+                    height: 40px;
+                    background-size: contain;
+                    display: inline-block;
+                    // margin: 0 20px 0 0;
+                    // position: relative;
+                    // top: 15px;
+                }
+
+            }
+        }
+    }
+
+    .c3 {
+        @media screen and (max-width: 1024px) {
+            flex-basis: 100%;
+        }
+    }
+}
