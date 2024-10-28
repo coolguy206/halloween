@@ -1,9 +1,106 @@
-const $ = require('jquery');
+import $ from 'jquery';
 import PouchDB from 'pouchdb';
-const db = new PouchDB('attendees');
+var localDB = new PouchDB('attendees-2024');
+var remoteDB = new PouchDB('http://david:LornaDamo206$@127.0.0.1:5984/attendees-2024');
+
+// console.log(PouchDB);
 
 $(document).ready(function () {
     console.log(`ready`);
+
+    //? db info
+    localDB.info().then((data) => {
+        console.log(data);
+    }).catch((err) => {
+        console.log(err);
+    });
+
+    remoteDB.info().then((data) => {
+        console.log(data);
+    }).catch((err) => {
+        console.log(err);
+    });
+
+    //? replicate db
+    localDB.replicate.to(remoteDB).on('complete', function (data) {
+        // yay, we're done!
+        console.log(`replicate successful`);
+        console.log(data);
+    }).on('error', function (err) {
+        // boo, something went wrong!
+        console.log(`replicate NOT successful`);
+        console.log(err);
+    });
+
+    //? sync db
+    localDB.sync(remoteDB, {
+        live: true,
+        retry: true
+    }).on('complete', function (data) {
+        // yay, we're done!
+        console.log(`sync successful`);
+        console.log(data);
+    }).on('error', function (err) {
+        // boo, something went wrong!
+        console.log(`sync NOT successful`);
+        console.log(err);
+    });
+
+    //? db changes
+    remoteDB.changes({
+        since: 'now',
+        live: true,
+        include_docs: true
+    }).on('change', function (change) {
+        // change.id contains the doc id, change.doc contains the doc
+        console.log(`remoteDB changed`);
+        console.log(change);
+
+        $('.c2 ul li').remove();
+
+        remoteDB.allDocs({ include_docs: true, descending: true }, function (err, data) {
+            console.log(data);
+
+            var family = data.rows;
+            family.map((val, i) => {
+                console.log(val, i);
+
+                var parents = val.doc.parent;
+                var children = val.doc.child;
+
+                var theParents = ``;
+                var theChildren = ``;
+
+                if (parents.length < 2) {
+                    theParents = `and their Parent ${parents[0]}`
+                } else {
+                    parents.map((arr, j) => {
+                        theParents = `${theParents} ${arr},`
+                    });
+
+                    theParents = `and their Parents ${theParents}`;
+                }
+
+                if (children.length < 2) {
+                    theChildren = `<span>${children[0]}</span>`;
+                } else {
+                    children.map((arr, j) => {
+                        theChildren = `${theChildren} <span>${arr}</span>,`
+                    });
+                }
+
+                var elem = `<li><div>${theChildren} ${theParents}</div></li>`;
+
+                $('.c2 ul').append(elem);
+            });
+
+        });
+
+    }).on('error', function (err) {
+        // handle errors
+        console.log(`db changed error`);
+        console.log(err);
+    });
 
     var year = new Date().getFullYear();
     $('header h1 span, footer p span').text(year);
@@ -51,21 +148,23 @@ $(document).ready(function () {
     });
 
     //? destroy db
-    // db.destroy().then((res) => {
+    // localDB.destroy().then((res) => {
     //     console.log('destroyed db');
     //     console.log(res);
     // })
 
-    //? remove a doc
-    // db.remove('--2024');
+    // remoteDB.destroy().then((res) => {
+    //     console.log('destroyed db');
+    //     console.log(res);
+    // })
 
     //? on page load get db and show if any entries
-    db.allDocs({ include_docs: true, descending: true }, function (err, data) {
-        console.log(data);
+    remoteDB.allDocs({ include_docs: true, descending: true }, function (err, data) {
+        // console.log(data);
         if (data.rows.length > 0) {
             var family = data.rows;
             family.map((val, i) => {
-                console.log(val, i);
+                // console.log(val, i);
 
                 var parents = val.doc.parent;
                 var children = val.doc.child;
@@ -136,50 +235,51 @@ $(document).ready(function () {
         if (obj.parent.length !== 0 && obj.child.length !== 0) {
 
             //? send data to pouchdb
-            db.put(obj).then(function (response) {
+            localDB.put(obj).then(function (response) {
                 // handle response
-                // console.log(response);
+                console.log(response);
             }).then(function (data) {
 
-                $('.c2 ul li').remove();
+                // $('.c2 ul li').remove();
 
-                db.allDocs({ include_docs: true, descending: true }, function (err, data) {
-                    console.log(data);
+                // remoteDB.allDocs({ include_docs: true, descending: true }, function (err, data) {
+                //     console.log(data);
 
-                    var family = data.rows;
-                    family.map((val, i) => {
-                        console.log(val, i);
+                //     var family = data.rows;
+                //     family.map((val, i) => {
+                //         console.log(val, i);
 
-                        var parents = val.doc.parent;
-                        var children = val.doc.child;
+                //         var parents = val.doc.parent;
+                //         var children = val.doc.child;
 
-                        var theParents = ``;
-                        var theChildren = ``;
+                //         var theParents = ``;
+                //         var theChildren = ``;
 
-                        if (parents.length < 2) {
-                            theParents = `and their Parent ${parents[0]}`
-                        } else {
-                            parents.map((arr, j) => {
-                                theParents = `${theParents} ${arr},`
-                            });
+                //         if (parents.length < 2) {
+                //             theParents = `and their Parent ${parents[0]}`
+                //         } else {
+                //             parents.map((arr, j) => {
+                //                 theParents = `${theParents} ${arr},`
+                //             });
 
-                            theParents = `and their Parents ${theParents}`;
-                        }
+                //             theParents = `and their Parents ${theParents}`;
+                //         }
 
-                        if (children.length < 2) {
-                            theChildren = `<span>${children[0]}</span>`;
-                        } else {
-                            children.map((arr, j) => {
-                                theChildren = `${theChildren} <span>${arr}</span>,`
-                            });
-                        }
+                //         if (children.length < 2) {
+                //             theChildren = `<span>${children[0]}</span>`;
+                //         } else {
+                //             children.map((arr, j) => {
+                //                 theChildren = `${theChildren} <span>${arr}</span>,`
+                //             });
+                //         }
 
-                        var elem = `<li><div>${theChildren} ${theParents}</div></li>`;
+                //         var elem = `<li><div>${theChildren} ${theParents}</div></li>`;
 
-                        $('.c2 ul').append(elem);
-                    });
+                //         $('.c2 ul').append(elem);
+                //     });
 
-                });
+                // });
+
             }).catch(function (err) {
                 console.log(`oops something went wrong.`)
                 console.log(err);
