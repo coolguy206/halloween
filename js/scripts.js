@@ -4,7 +4,7 @@ $(document).ready(function () {
     console.log(`ready`);
 
     //? on page load get all entries & put on the page
-    fetch('http://localhost:3000/', {
+    fetch('https://halloween-mongodb.netlify.app/.netlify/functions/index', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json', // Expect JSON data
